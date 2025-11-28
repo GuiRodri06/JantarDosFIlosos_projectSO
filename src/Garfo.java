@@ -22,12 +22,6 @@ public class Garfo {
         }
     }
 
-    while (ocupante != null) {
-        wait();
-    }
-
-    ocupante = f;
-    }
 
     public synchronized void largar (Philosopher f) {
         if (ocupante == f) {

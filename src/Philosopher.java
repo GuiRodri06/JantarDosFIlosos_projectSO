@@ -15,6 +15,7 @@ public class Philosopher implements Runnable {
     }
 
     public void eat(Integer id) throws InterruptedException {
+        rightFork.segurar(this);
         System.out.println("O filosofo " + id + "estas a comer");
         Thread.sleep(1000);
     }
