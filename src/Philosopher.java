@@ -1,4 +1,4 @@
-public class Philosopher {
+public class Philosopher implements Runnable {
 
     private Integer id;
     private Garfo rightFork;
@@ -14,13 +14,25 @@ public class Philosopher {
         this.leftFork = leftFork;
     }
 
-    public void eat(Integer id) {
+    public void eat(Integer id) throws InterruptedException {
         System.out.println("O filosofo " + id + "estas a comer");
+        Thread.sleep(1000);
     }
 
-    public void think(Integer id) {
+    public void think(Integer id) throws InterruptedException {
         System.out.println("O filosofo " + id + "esta a pensar");
+        Thread.sleep(1000);
     }
 
 
+    @Override
+    public void run() {
+        try {
+            think(id);
+
+            eat(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
