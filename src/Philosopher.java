@@ -22,5 +22,9 @@ public class Philosopher {
         System.out.println("O filosofo " + id + "esta a pensar");
     }
 
+    public Integer getId() {
+        return id;
+    }
+
 
 }
