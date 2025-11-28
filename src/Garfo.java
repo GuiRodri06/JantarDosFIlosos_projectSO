@@ -12,15 +12,28 @@ public class Garfo {
         return id;
     }
 
+    /**
+     * Retorna o Id do filosofo qu esta com o garfo se estiver livre retorna -1
+     * @return ID do ocupante ou -1 se o garfo estiver livre
+     */
+
     public synchronized int getOcupanteId() {
         return ocupante == null ? -1 : ocupante.getId();
     }
 
+
+    /**
+     * Metodo que permite um filosofo segurar o garfo 
+     * A thread so prossegue quando o garfo estiver livre
+     * @throws InterruptedException se a thread for interrompida enquanto espera
+     */
+
     public synchronized void segurar (Philosopher f) throws InterruptedException {
         if (f == null) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("O filósofo não pode ser nulo.");
         }
 
+    // Espera enquanto o garfo estiver ocupado
     while (ocupante != null) {
         wait();
     }
@@ -28,10 +41,15 @@ public class Garfo {
     ocupante = f;
     }
 
+
+    /*
+    *Libera o garfo caso o filosofo informado seja realmente aquele que ta com o garfo ~
+    * depois de liberar o notifyAll e utilizado para evitar starvation
+    */
     public synchronized void largar (Philosopher f) {
-        if (ocupante == f) {
+        if (ocupante == f) { // Apenas libera o garfo se o filósofo for realmente o ocupante.
             ocupante = null;
-            notifyAll();
+            notifyAll();  // Notifica todas as threads que estão possivelmente esperando.
         }
     }
 }
