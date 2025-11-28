@@ -13,14 +13,13 @@ public class Garfo {
     }
 
     public synchronized int getOcupanteId() {
-        return ( ocupante == null ? -1 : ocupante.getId());
+        return ocupante == null ? -1 : ocupante.getId();
     }
 
     public synchronized void segurar (Philosopher f) throws InterruptedException {
         if (f == null) {
             throw new IllegalArgumentException("");
         }
-    }
 
 
     public synchronized void largar (Philosopher f) {

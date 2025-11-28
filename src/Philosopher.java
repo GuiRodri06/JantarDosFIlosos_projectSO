@@ -25,6 +25,10 @@ public class Philosopher implements Runnable {
         Thread.sleep(1000);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
 
     @Override
     public void run() {
