@@ -1,34 +1,26 @@
 public class Philosopher implements Runnable {
 
     private Integer id;
-    private Garfo rightFork;
-    private Garfo leftFork;
-    private int status;
+    private Garfo controleGarfos;
+    private int status; // 0=Pensando, 1=Comendo
+    private int refeicoes = 0; // UTILIZAR PARA CONTAR
 
-    public Philosopher(Integer id) {
+    public Philosopher(Integer id, Garfo controleGarfos) {
         this.id = id;
-        this.status = 0; //Estado inicial
+        this.controleGarfos = controleGarfos;
+        this.status = 0;
     }
 
-    public Philosopher(Integer id, Garfo rightFork, Garfo leftFork) {
-        this.id = id;
-        this.rightFork = rightFork;
-        this.leftFork = leftFork;
-
-        this.status = 0; //Estado inicial
-    }
-
-    public void eat(Integer id) throws InterruptedException {
+    public void eat() throws InterruptedException {
         setStatus(1);// Estado = comer
-
-        System.out.println("O filosofo " + id + "estas a comer");
+        this.refeicoes++;
+        System.out.println("O filosofo " + id + " esta a comer a " +refeicoes+ "ª refeição");
         Thread.sleep(1000);
     }
 
-    public void think(Integer id) throws InterruptedException {
+    public void think() throws InterruptedException {
         setStatus(0); // Estado = pensar
-
-        System.out.println("O filosofo " + id + "esta a pensar");
+        System.out.println("O filosofo " + id + " esta a pensar");
         Thread.sleep(1000);
     }
 
@@ -48,11 +40,20 @@ public class Philosopher implements Runnable {
     @Override
     public void run() {
         try {
-            think(id);
+            while (refeicoes < 5) { // Limita a 5 refeições para vermos o fim da execução
 
-            eat(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                think();
+                // 2. TENTA PEGAR GARFOS (A thread bloqueia se necessário)
+                controleGarfos.pegar(this);
+
+                // 3. COMER (Se pegou com sucesso)
+                eat();
+
+                // 4. LIBERAR GARFOS
+                controleGarfos.liberar(this);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 }
