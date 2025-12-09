@@ -12,7 +12,6 @@ public class Garfo {
         //Inicializa os semaforos dos garfos como livres (1)
         for (int i = 0; i < n; i++) {
             semaforosGarfos[i] = new Semaphore(1); //cada garfo começa disponivel
-
         }
     }
 
@@ -31,12 +30,15 @@ public class Garfo {
 
         mutex.release(); //Libera o mutex após pegar os garfos
 
-        System.out.println("O filosofo " + (f.getId() + 1) + " pegou os garfos " + esquerdo + " e " + direito);
-        f.setStatus(1);
+        synchronized (System.out) {
+            System.out.println("O filosofo " + (f.getId() + 1) + " pegou os garfos " + esquerdo + " e " + direito);
+            Thread.sleep(1000);
+        }
 
+        f.setStatus(1);
     }
 
-    public void liberar (Philosopher f) {
+    public void liberar (Philosopher f) throws InterruptedException {
 
         int id = f.getId();
         int esquerda = id;
@@ -47,6 +49,10 @@ public class Garfo {
         semaforosGarfos[esquerda].release();
         semaforosGarfos[direita].release();
 
-        System.out.println("O filosofo " + (f.getId() + 1) + " soltou os garfos " + esquerda + " e " + direita);
+        synchronized (System.out) {
+            System.out.println("O filosofo " + (f.getId() + 1) + " soltou os garfos " + esquerda + " e " + direita);
+            Thread.sleep(1000);
+        }
+
     }
 }

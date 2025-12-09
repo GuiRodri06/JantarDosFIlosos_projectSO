@@ -14,14 +14,18 @@ public class Philosopher implements Runnable {
     public void eat() throws InterruptedException {
         setStatus(1);// Estado = comer
         this.refeicoes++;
-        System.out.println("O filosofo " + id + " esta a comer a " +refeicoes+ "ª refeição");
-        Thread.sleep(1000);
+        synchronized (System.out) {
+            System.out.println("O filosofo " + (id+1) + " esta a comer a " +refeicoes+ "ª refeição");
+            Thread.sleep(1000);
+        }
     }
 
     public void think() throws InterruptedException {
         setStatus(0); // Estado = pensar
-        System.out.println("O filosofo " + id + " esta a pensar");
-        Thread.sleep(1000);
+        synchronized (System.out) {
+            System.out.println("O filosofo " + (id+1) + " esta a pensar");
+            Thread.sleep(1000);
+        }
     }
 
     public Integer getId() {
@@ -40,17 +44,25 @@ public class Philosopher implements Runnable {
     @Override
     public void run() {
         try {
-            while (refeicoes < 5) { // Limita a 5 refeições para vermos o fim da execução
+            while (refeicoes < 3) { // Limita a 5 refeições para vermos o fim da execução
 
                 think();
-                // 2. TENTA PEGAR GARFOS (A thread bloqueia se necessário)
+
+                // TENTA PEGAR GARFOS (A thread bloqueia se necessário)
                 controleGarfos.pegar(this);
 
-                // 3. COMER (Se pegou com sucesso)
+                // COMER (Se pegou com sucesso)
                 eat();
 
-                // 4. LIBERAR GARFOS
+                // LIBERAR GARFOS
                 controleGarfos.liberar(this);
+
+                if(refeicoes == 3) {
+                    synchronized (System.out) {
+                        System.out.println("o filosofo " + (id+1) +" foi embora satisfeito!");
+                        Thread.sleep(1000);
+                    }
+                }
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

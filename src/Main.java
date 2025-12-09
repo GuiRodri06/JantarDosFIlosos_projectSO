@@ -26,8 +26,8 @@ public class Main {
             thread.start();
         }
 
-        System.out.println(numPhi + " Filósofos e suas Threads iniciadas. Observando...");
-
-        scanner.close();
+        synchronized (System.out) {
+            System.out.println(numPhi + " Filósofos e suas Threads iniciadas. Observando...");
+        }
     }
 }
