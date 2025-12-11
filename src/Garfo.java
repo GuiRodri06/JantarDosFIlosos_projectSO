@@ -32,9 +32,8 @@ public class Garfo {
             semaforosGarfos[direito].acquire();
     }
 
-    synchronized(System.out) {
-            System.out.println("O filosofo " + (f.getId() + 1)  + " pegou os garfos " + esquerdo + " e " + direito);
-        }
+        Logger.registar("O filosofo " + (f.getId() + 1)  + " pegou os garfos " + esquerdo + " e " + direito);
+
         
     }
 
@@ -49,8 +48,7 @@ public class Garfo {
         semaforosGarfos[esquerda].release();
         semaforosGarfos[direita].release();
 
-       synchronized(System.out) {
-            System.out.println("O filosofo " + (f.getId() + 1)  + " soltou os garfos " + esquerda + " e " + direita);
-        }
+
+        Logger.registar("O filosofo " + (f.getId() + 1)  + " soltou os garfos " + esquerda + " e " + direita);
     }
 }
