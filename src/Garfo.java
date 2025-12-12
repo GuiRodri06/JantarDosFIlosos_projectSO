@@ -15,13 +15,13 @@ public class Garfo {
         }
     }
 
-    //Metodo que tenta pegar os dois garfos
+    
     public void pegar(Philosopher f) throws InterruptedException {
     int id = f.getId();
     int esquerdo = id;
     int direito = (id + 1) % semaforosGarfos.length;
 
-    // Ordem global: pegar sempre primeiro o menor ID
+    // Ordem global: pega sempre primeiro o menor ID 
         int primeiro = Math.min(esquerdo, direito);
         int segundo = Math.max(esquerdo, direito);
 
