@@ -43,16 +43,9 @@ public class Philosopher implements Runnable {
             while (refeicoes < 5) { // Limita a 5 refeições
 
                 think();
-
-                // TENTA PEGAR GARFOS (A thread bloqueia se necessário)
                 controleGarfos.pegar(this);
-
-                // COMER (Se pegou com sucesso)
                 eat();
-
-                // LIBERAR GARFOS
                 controleGarfos.liberar(this);
-
             }
 
             Logger.appendLog("O filosofo " + (id+1) +" foi embora satisfeito!");

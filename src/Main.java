@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        long tempoInicial = System.currentTimeMillis(); // MARCA O TEMPO INICIAL
+        long tempoInicial = System.currentTimeMillis(); // marca o tempo inicial
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Insira quantos filósofos vão comer (N >= 2): ");
@@ -21,7 +21,7 @@ public class Main {
             threads[i].start();
         }
 
-        // 1. Esperar todas as threads terminarem (essencial para log completo)
+        // Esperar todas as threads terminarem (essencial para log completo)
         for (Thread thread : threads) {
             try {
                 thread.join();
@@ -30,13 +30,13 @@ public class Main {
             }
         }
 
-        long tempoFinal = System.currentTimeMillis(); // MARCA O TEMPO FINAL
+        long tempoFinal = System.currentTimeMillis(); // Marca o tempo final
         long tempoExecucaoMs = tempoFinal - tempoInicial;
 
-        // 2. Registra o tempo total de execução no log buffer
+        // Registra o tempo total de execução no log buffer
         Logger.registrarTempoExecucao(tempoExecucaoMs);
 
-        // 2. Gravar o buffer no arquivo após o término da simulação
+        // Gravar o buffer no arquivo após o término da simulação
         try {
             Logger.gravarTXT("filosofos_log.txt");
             System.out.println("\n--- SIMULAÇÃO FINALIZADA ---");

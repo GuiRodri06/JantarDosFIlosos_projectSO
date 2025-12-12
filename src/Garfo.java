@@ -4,8 +4,8 @@ public class Garfo {
 
     private final Semaphore[] semaforosGarfos;
 
-    public Garfo (int n) {
-        
+    public Garfo(int n) {
+
         semaforosGarfos = new Semaphore[n];
 
         //Inicializa os semaforos dos garfos como livres (1)
@@ -15,13 +15,13 @@ public class Garfo {
         }
     }
 
-    
-    public void pegar(Philosopher f) throws InterruptedException {
-    int id = f.getId();
-    int esquerdo = id;
-    int direito = (id + 1) % semaforosGarfos.length;
 
-    // Ordem global: pega sempre primeiro o menor ID 
+    public void pegar(Philosopher f) throws InterruptedException {
+        int id = f.getId();
+        int esquerdo = id;
+        int direito = (id + 1) % semaforosGarfos.length;
+
+        // Ordem global: pega sempre primeiro o menor ID
         int primeiro = Math.min(esquerdo, direito);
         int segundo = Math.max(esquerdo, direito);
 
@@ -30,19 +30,19 @@ public class Garfo {
 
         Logger.appendLog("O filosofo " + (id + 1) + " pegou os garfos " + primeiro + " e " + segundo);
 
-}
+    }
 
     public void liberar(Philosopher f) {
-    int id = f.getId();
-    int esquerdo = id;
-    int direito = (id + 1) % semaforosGarfos.length;
+        int id = f.getId();
+        int esquerdo = id;
+        int direito = (id + 1) % semaforosGarfos.length;
 
         int primeiro = Math.min(esquerdo, direito);
         int segundo = Math.max(esquerdo, direito);
 
         Logger.appendLog("O filosofo " + (id + 1) + " soltou os garfos " + primeiro + " e " + segundo);
 
-    semaforosGarfos[primeiro].release();
-    semaforosGarfos[segundo].release();
-}
+        semaforosGarfos[primeiro].release();
+        semaforosGarfos[segundo].release();
+    }
 }
