@@ -15,13 +15,13 @@ public class Philosopher implements Runnable {
         setStatus(1);// Estado = comer
         this.refeicoes++;
         Logger.registar("O filosofo " + (id+1) + " esta a comer a " +refeicoes+ "ª refeição");
-        Thread.sleep(1000);
+        Thread.sleep(10);
     }
 
     public void think() throws InterruptedException {
         setStatus(0); // Estado = pensar
         Logger.registar("O filosofo " + (id+1) + " esta a pensar");
-        Thread.sleep(1000);
+        Thread.sleep(10);
     }
 
     public Integer getId() {
@@ -56,7 +56,7 @@ public class Philosopher implements Runnable {
             }
 
             Logger.registar("o filosofo " + (id+1) +" foi embora satisfeito!");
-            Thread.sleep(1000);
+            Thread.sleep(10);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

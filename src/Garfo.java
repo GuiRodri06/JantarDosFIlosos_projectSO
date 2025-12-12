@@ -17,38 +17,32 @@ public class Garfo {
 
     //Metodo que tenta pegar os dois garfos
     public void pegar(Philosopher f) throws InterruptedException {
+    int id = f.getId();
+    int esquerdo = id;
+    int direito = (id + 1) % semaforosGarfos.length;
 
-        int id = f.getId();
-        int esquerdo = id;
-        int direito = (id +1) % semaforosGarfos.length; // (id + 1, com loop)
+    // Ordem global: pegar sempre primeiro o menor ID
+        int primeiro = Math.min(esquerdo, direito);
+        int segundo = Math.max(esquerdo, direito);
 
-        if (id == semaforosGarfos.length -1) {
+        semaforosGarfos[primeiro].acquire();
+        semaforosGarfos[segundo].acquire();
 
-            semaforosGarfos[direito].acquire();
-            semaforosGarfos[esquerdo].acquire();
-        }
-        else {
-            semaforosGarfos[esquerdo].acquire();
-            semaforosGarfos[direito].acquire();
-    }
+    Logger.registar("O filosofo " + (id + 1) + " pegou os garfos " + primeiro + " e " + segundo);
 
-        Logger.registar("O filosofo " + (f.getId() + 1)  + " pegou os garfos " + esquerdo + " e " + direito);
+}
 
-        
-    }
+    public void liberar(Philosopher f) {
+    int id = f.getId();
+    int esquerdo = id;
+    int direito = (id + 1) % semaforosGarfos.length;
 
-    public void liberar (Philosopher f) {
+        int primeiro = Math.min(esquerdo, direito);
+        int segundo = Math.max(esquerdo, direito);
 
-        int id = f.getId();
-        int esquerda = id;
-        int direita = (id + 1) % semaforosGarfos.length;
+        Logger.registar("O filosofo " + (id + 1) + " soltou os garfos " + primeiro + " e " + segundo);
 
-        //Soltar os garfos
-
-        semaforosGarfos[esquerda].release();
-        semaforosGarfos[direita].release();
-
-
-        Logger.registar("O filosofo " + (f.getId() + 1)  + " soltou os garfos " + esquerda + " e " + direita);
-    }
+    semaforosGarfos[primeiro].release();
+    semaforosGarfos[segundo].release();
+}
 }
