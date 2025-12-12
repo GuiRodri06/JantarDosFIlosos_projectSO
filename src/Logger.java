@@ -2,16 +2,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Logger {
-    // Usamos o StringBuilder dentro de um bloco synchronized para garantir a segurança da thread.
-    private static final StringBuilder logBuffer = new StringBuilder();
 
-    // Métodos estáticos para controle:
+    private static final StringBuilder logBuffer = new StringBuilder();
 
     // 1. Anexar mensagem (chamado durante a simulação)
     public static synchronized void appendLog(String msg) {
-        // Captura a mensagem e anexa ao buffer, garantindo que o System.out também funcione
-        System.out.println(msg); // Imprime imediatamente no terminal
-        logBuffer.append(msg).append("\n"); // Anexa ao buffer para gravação futura
+        System.out.println(msg);
+        logBuffer.append(msg).append("\n");
+    }
+
+    // NOVO MÉTODO: Registra o tempo de execução
+    public static synchronized void registrarTempoExecucao(long tempoMs) {
+        double tempoSegundos = tempoMs / 1000.0;
+        String msgTempo = "\n[RESUMO] Tempo Total de Execução: " + tempoSegundos + " segundos.";
+
+        // Adiciona ao final do log buffer
+        logBuffer.append(msgTempo).append("\n");
     }
 
     // 2. Gravar o buffer no arquivo (chamado no final)

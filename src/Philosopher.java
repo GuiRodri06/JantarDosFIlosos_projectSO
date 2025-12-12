@@ -56,7 +56,7 @@ public class Philosopher implements Runnable {
             }
 
             Logger.appendLog("O filosofo " + (id+1) +" foi embora satisfeito!");
-            Thread.sleep(10);
+            Thread.sleep(1000);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
