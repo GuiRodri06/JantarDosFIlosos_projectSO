@@ -28,7 +28,7 @@ public class Garfo {
         semaforosGarfos[primeiro].acquire();
         semaforosGarfos[segundo].acquire();
 
-    Logger.registar("O filosofo " + (id + 1) + " pegou os garfos " + primeiro + " e " + segundo);
+        Logger.appendLog("O filosofo " + (id + 1) + " pegou os garfos " + primeiro + " e " + segundo);
 
 }
 
@@ -40,7 +40,7 @@ public class Garfo {
         int primeiro = Math.min(esquerdo, direito);
         int segundo = Math.max(esquerdo, direito);
 
-        Logger.registar("O filosofo " + (id + 1) + " soltou os garfos " + primeiro + " e " + segundo);
+        Logger.appendLog("O filosofo " + (id + 1) + " soltou os garfos " + primeiro + " e " + segundo);
 
     semaforosGarfos[primeiro].release();
     semaforosGarfos[segundo].release();
